@@ -339,17 +339,20 @@
 
     /* ── HERO ── */
     #about {
-      min-height: 100vh; display: flex; align-items: center;
-      padding: 7rem 6vw 6rem; overflow: hidden;
+      min-height: 100vh; display: flex; align-items: stretch;
+      padding: 7rem 2vw 4rem 3vw; overflow: hidden; width: 100%; box-sizing: border-box;
     }
     .hero-image-wrap {
-      flex-shrink: 0; width: 360px; position: relative;
-      display: flex; align-items: center; justify-content: center;
-      align-self: stretch;
+      flex-shrink: 0; width: 420px; position: relative;
+      display: flex; align-items: flex-end; justify-content: center;
     }
-    .orbit-ring {
-      position: absolute; border-radius: 50%;
-      left: 50%; top: 50%; transform: translate(-50%,-50%);
+    .orbit-ring { display: none; }
+    .profile-sticker {
+      width: 420px; height: auto; max-height: 580px;
+      object-fit: contain; object-position: bottom center;
+      display: block; position: relative; z-index: 2;
+      filter: drop-shadow(0 0 30px rgba(79,142,255,0.35)) drop-shadow(0 20px 60px rgba(0,0,0,0.6));
+      transition: transform 0.15s ease;
     }
     .profile-circle {
       width: 300px; height: 300px; border-radius: 50%; overflow: hidden;
@@ -375,7 +378,7 @@
       padding: 14px 20px; backdrop-filter: blur(12px);
       box-shadow: 0 8px 32px rgba(0,0,0,0.5); z-index: 5;
     }
-    .hero-content { flex: 1; min-width: 0; padding-left: 5rem; }
+    .hero-content { flex: 0 0 auto; width: 46%; min-width: 0; padding-left: 12rem; padding-right: 0.5rem; display: flex; flex-direction: column; justify-content: center; padding-top: 2rem; }
 
     .open-pill {
       display: inline-flex; align-items: center; gap: 10;
@@ -387,7 +390,7 @@
       margin-bottom: 1.8rem;
     }
     .hero-name {
-      font-size: clamp(3rem,5.5vw,5.2rem); font-weight: 800;
+      font-size: clamp(3rem,6.5vw,7rem); font-weight: 800;
       line-height: 1.0; letter-spacing: -0.03em;
       margin-bottom: 0.2rem; cursor: default;
     }
@@ -398,7 +401,7 @@
     }
     .hero-bio {
       color: var(--p-muted); font-size: 1rem; line-height: 1.85;
-      max-width: 500px; margin-bottom: 2.5rem;
+      max-width: 680px; margin-bottom: 2.5rem;
       font-family: 'Space Mono', monospace;
     }
     .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
@@ -617,8 +620,9 @@
     /* ── RESPONSIVE ── */
     @media (max-width: 900px) {
       #about { flex-direction: column; padding: 6rem 2rem 4rem; gap: 2rem; }
-      .hero-image-wrap { width: 100%; }
-      .hero-content { padding-left: 0; }
+      .hero-image-wrap { width: 100%; max-width: 340px; margin: 0 auto; }
+      .hero-content { padding-left: 0; width: 100%; }
+      .hero-right-panel { display: none; }
       .edu-grid { grid-template-columns: 1fr; }
       .contact-grid { grid-template-columns: 1fr; }
       nav { padding: 0 1.5rem; }
@@ -629,6 +633,365 @@
       .projects-grid { grid-template-columns: 1fr; }
       nav ul { display: none; }
     }
+
+    /* ── HERO RIGHT PANEL ── */
+    .hero-right-panel {
+      flex: 1; min-width: 0; display: flex; flex-direction: column;
+      justify-content: center; align-items: flex-start;
+      padding: 2rem 3rem 2rem 0.5rem; gap: 1.2rem; position: relative;
+    }
+    .hrp-card {
+      background: rgba(12,18,32,0.85); border: 1px solid rgba(79,142,255,0.18);
+      border-radius: 16px; padding: 1.2rem 1.4rem;
+      backdrop-filter: blur(14px); width: 100%;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04);
+      animation: badge-float 4s ease-in-out infinite;
+    }
+    .hrp-card:nth-child(2) { animation-delay: 0.8s; }
+    .hrp-card:nth-child(3) { animation-delay: 1.6s; }
+    .hrp-card-label {
+      font-family: 'Space Mono', monospace; font-size: 0.58rem;
+      color: var(--p-accent); letter-spacing: 0.18em; text-transform: uppercase;
+      margin-bottom: 0.75rem; opacity: 0.8;
+    }
+    .hrp-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .hrp-tag {
+      padding: 4px 10px; border-radius: 100px;
+      font-family: 'Space Mono', monospace; font-size: 0.62rem;
+      border: 1px solid rgba(79,142,255,0.25);
+      background: rgba(79,142,255,0.07); color: #a0b4d6;
+      letter-spacing: 0.05em; transition: all 0.2s;
+    }
+    .hrp-tag:hover { background: rgba(79,142,255,0.18); color: var(--p-accent); border-color: rgba(79,142,255,0.5); }
+    .hrp-tag.green { border-color: rgba(34,211,163,0.25); background: rgba(34,211,163,0.07); color: #7edfc7; }
+    .hrp-tag.green:hover { background: rgba(34,211,163,0.18); color: var(--p-green); border-color: rgba(34,211,163,0.5); }
+    .hrp-tag.purple { border-color: rgba(168,85,247,0.25); background: rgba(168,85,247,0.07); color: #c4a0e8; }
+    .hrp-stat-row { display: flex; gap: 1rem; }
+    .hrp-stat-item { flex: 1; text-align: center; }
+    .hrp-stat-num { font-size: 1.6rem; font-weight: 800; font-family: 'Space Mono', monospace; color: var(--p-accent); line-height: 1; }
+    .hrp-stat-lbl { font-family: 'Space Mono', monospace; font-size: 0.55rem; color: var(--p-muted); letter-spacing: 0.12em; text-transform: uppercase; margin-top: 3px; }
+    .hrp-code { font-family: 'Space Mono', monospace; font-size: 0.68rem; line-height: 1.7; color: var(--p-muted); }
+    .hrp-code .kw { color: var(--p-purple); }
+    .hrp-code .fn { color: var(--p-accent); }
+    .hrp-code .st { color: var(--p-green); }
+    .hrp-code .cm { color: #4a5568; font-style: italic; }
+
+    /* ══════════════════════════════════════════════════════
+       COLOR ENHANCEMENTS — vibrant palette layer
+    ══════════════════════════════════════════════════════ */
+
+    /* Updated root accent colors */
+    :root {
+      --p-cyan:   #22d3ee;
+      --p-pink:   #f472b6;
+      --p-indigo: #818cf8;
+    }
+
+    /* ── HERO BACKGROUND gradient ── */
+    #about {
+      background: radial-gradient(ellipse 90% 80% at 20% 50%,
+        rgba(14,30,80,0.85) 0%, transparent 65%),
+        radial-gradient(ellipse 60% 60% at 80% 30%,
+        rgba(88,28,135,0.35) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 50% at 60% 80%,
+        rgba(6,78,59,0.25) 0%, transparent 55%),
+        linear-gradient(135deg, #04060e 0%, #080d1c 45%, #0a0820 100%);
+    }
+
+    /* ── HERO SIDE STRIPS — colorful gradient lines ── */
+    .hero-side-line {
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(34,211,238,0.4) 0px, rgba(34,211,238,0.4) 4px,
+        rgba(167,139,250,0.3) 4px, rgba(167,139,250,0.3) 8px,
+        transparent 8px, transparent 18px) !important;
+      background-size: 1px 26px !important;
+    }
+    .hero-side-label { color: rgba(34,211,238,0.5) !important; }
+
+    /* ── SECTION HEADING — gradient text ── */
+    .section-head h2 {
+      background: linear-gradient(135deg, #22d3ee 0%, #a78bfa 50%, #f472b6 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* ── NAV accent line ── */
+    nav::after {
+      content: '';
+      position: absolute;
+      bottom: -1px; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, #22d3ee 25%, #a78bfa 50%, #f472b6 75%, transparent);
+      opacity: 0.4;
+      pointer-events: none;
+    }
+    nav { position: fixed; } /* ensure stacking for ::after */
+
+    /* ── SCROLL PROGRESS — richer gradient ── */
+    #scroll-progress {
+      background: linear-gradient(90deg, #22d3ee, #a78bfa, #f472b6) !important;
+      box-shadow: 0 0 12px rgba(167,139,250,0.6) !important;
+    }
+
+    /* ── BUTTONS — colorful gradients ── */
+    .btn-primary {
+      background: linear-gradient(135deg, #22d3ee 0%, #3b82f6 50%, #a78bfa 100%) !important;
+      border-color: transparent !important;
+      color: #fff !important;
+      box-shadow: 0 0 30px rgba(34,211,238,0.4), 0 4px 20px rgba(59,130,246,0.3) !important;
+    }
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #a78bfa 0%, #f472b6 100%) !important;
+      box-shadow: 0 0 40px rgba(244,114,182,0.5) !important;
+      border-color: transparent !important;
+    }
+    .btn-outline {
+      border-color: rgba(167,139,250,0.4) !important;
+      color: #a78bfa !important;
+    }
+    .btn-outline:hover {
+      background: rgba(167,139,250,0.1) !important;
+      border-color: #a78bfa !important;
+    }
+    .nav-cv {
+      background: linear-gradient(135deg, rgba(34,211,238,0.08), rgba(167,139,250,0.08)) !important;
+      border-color: rgba(34,211,238,0.4) !important;
+      color: #22d3ee !important;
+    }
+    .nav-cv:hover {
+      background: linear-gradient(135deg, #22d3ee, #3b82f6) !important;
+      color: #03070f !important;
+      border-color: transparent !important;
+    }
+
+    /* ── SKILL PILLS — category color coding ── */
+    /* Language pills — blue */
+    .skill-pill[data-cat="lang"] {
+      border-color: rgba(59,130,246,0.3) !important;
+      background: linear-gradient(135deg, rgba(59,130,246,0.07), rgba(14,30,80,0.5)) !important;
+    }
+    .skill-pill[data-cat="lang"]:hover {
+      border-color: #3b82f6 !important;
+      box-shadow: 0 10px 30px rgba(59,130,246,0.25) !important;
+    }
+    /* ML/AI pills — purple */
+    .skill-pill[data-cat="ml"] {
+      border-color: rgba(167,139,250,0.3) !important;
+      background: linear-gradient(135deg, rgba(167,139,250,0.07), rgba(67,20,120,0.2)) !important;
+    }
+    .skill-pill[data-cat="ml"]:hover {
+      border-color: #a78bfa !important;
+      box-shadow: 0 10px 30px rgba(167,139,250,0.25) !important;
+    }
+    /* Tools pills — teal/cyan */
+    .skill-pill[data-cat="tool"] {
+      border-color: rgba(34,211,163,0.3) !important;
+      background: linear-gradient(135deg, rgba(34,211,163,0.06), rgba(6,60,50,0.3)) !important;
+    }
+    .skill-pill[data-cat="tool"]:hover {
+      border-color: #22d3a3 !important;
+      box-shadow: 0 10px 30px rgba(34,211,163,0.2) !important;
+    }
+    /* Data/viz pills — orange */
+    .skill-pill[data-cat="data"] {
+      border-color: rgba(251,146,60,0.3) !important;
+      background: linear-gradient(135deg, rgba(251,146,60,0.07), rgba(80,40,10,0.3)) !important;
+    }
+    .skill-pill[data-cat="data"]:hover {
+      border-color: #fb923c !important;
+      box-shadow: 0 10px 30px rgba(251,146,60,0.2) !important;
+    }
+
+    /* ── PROJECT CARDS — colorful top border accent ── */
+    .proj-card::after {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      border-radius: 18px 18px 0 0;
+    }
+    .proj-card:nth-child(1)::after { background: linear-gradient(90deg, #22d3ee, #3b82f6); }
+    .proj-card:nth-child(2)::after { background: linear-gradient(90deg, #a78bfa, #f472b6); }
+    .proj-card:nth-child(3)::after { background: linear-gradient(90deg, #22d3a3, #22d3ee); }
+    .proj-card:nth-child(4)::after { background: linear-gradient(90deg, #fb923c, #f472b6); }
+    .proj-card:nth-child(5)::after { background: linear-gradient(90deg, #3b82f6, #a78bfa); }
+    .proj-card:nth-child(6)::after { background: linear-gradient(90deg, #22d3ee, #22d3a3); }
+    .proj-card:nth-child(7)::after { background: linear-gradient(90deg, #f472b6, #fb923c); }
+
+    /* ── FLOATING HERO RIGHT PANEL CARDS — vivid colored cards ── */
+    .hrp-card:nth-child(1) {
+      background: linear-gradient(135deg, rgba(8,80,90,0.75) 0%, rgba(6,40,60,0.7) 100%) !important;
+      border: 1.5px solid rgba(34,211,238,0.7) !important;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 0 30px rgba(34,211,238,0.2), inset 0 1px 0 rgba(34,211,238,0.2) !important;
+      animation: badge-float 4s ease-in-out infinite, glow-cyan 3s ease-in-out infinite !important;
+    }
+    .hrp-card:nth-child(2) {
+      background: linear-gradient(135deg, rgba(60,20,100,0.75) 0%, rgba(40,10,80,0.7) 100%) !important;
+      border: 1.5px solid rgba(167,139,250,0.7) !important;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 0 30px rgba(167,139,250,0.22), inset 0 1px 0 rgba(167,139,250,0.2) !important;
+      animation: badge-float 4s ease-in-out infinite 0.8s, glow-purple 3s ease-in-out infinite 1s !important;
+    }
+    .hrp-card:nth-child(3) {
+      background: linear-gradient(135deg, rgba(80,40,5,0.75) 0%, rgba(60,25,5,0.7) 100%) !important;
+      border: 1.5px solid rgba(251,146,60,0.7) !important;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 0 30px rgba(251,146,60,0.2), inset 0 1px 0 rgba(251,146,60,0.2) !important;
+      animation: badge-float 4s ease-in-out infinite 1.6s, glow-orange 3s ease-in-out infinite 2s !important;
+    }
+    .hrp-card:nth-child(1) .hrp-card-label {
+      color: #22d3ee !important; font-size: 0.6rem; letter-spacing: 0.2em;
+      text-shadow: 0 0 10px rgba(34,211,238,0.5);
+    }
+    .hrp-card:nth-child(2) .hrp-card-label {
+      color: #c4b5fd !important; font-size: 0.6rem; letter-spacing: 0.2em;
+      text-shadow: 0 0 10px rgba(167,139,250,0.5);
+    }
+    .hrp-card:nth-child(3) .hrp-card-label {
+      color: #fb923c !important; font-size: 0.6rem; letter-spacing: 0.2em;
+      text-shadow: 0 0 10px rgba(251,146,60,0.5);
+    }
+
+    /* Tech Stack tag rainbow palette */
+    .hrp-tag.t-blue   { background: rgba(59,130,246,0.18) !important; border-color: rgba(59,130,246,0.5) !important; color: #93c5fd !important; }
+    .hrp-tag.t-cyan   { background: rgba(34,211,238,0.15) !important; border-color: rgba(34,211,238,0.5) !important; color: #67e8f9 !important; }
+    .hrp-tag.t-teal   { background: rgba(34,211,163,0.15) !important; border-color: rgba(34,211,163,0.5) !important; color: #6ee7b7 !important; }
+    .hrp-tag.t-purple { background: rgba(167,139,250,0.18) !important; border-color: rgba(167,139,250,0.5) !important; color: #c4b5fd !important; }
+    .hrp-tag.t-pink   { background: rgba(244,114,182,0.15) !important; border-color: rgba(244,114,182,0.5) !important; color: #f9a8d4 !important; }
+    .hrp-tag.t-orange { background: rgba(251,146,60,0.15) !important; border-color: rgba(251,146,60,0.5) !important; color: #fdba74 !important; }
+    .hrp-tag.t-green  { background: rgba(74,222,128,0.15) !important; border-color: rgba(74,222,128,0.5) !important; color: #86efac !important; }
+
+    /* At a Glance — large gradient stat numbers */
+    .hrp-stat-num {
+      font-size: 2.2rem !important; font-weight: 800 !important;
+      background: linear-gradient(135deg, #22d3ee, #f472b6) !important;
+      -webkit-background-clip: text !important;
+      background-clip: text !important;
+      -webkit-text-fill-color: transparent !important;
+      line-height: 1 !important;
+    }
+    .hrp-stat-lbl { color: rgba(200,200,230,0.7) !important; font-size: 0.6rem !important; }
+
+    /* Glow pulse animations for cards */
+    @keyframes glow-cyan {
+      0%, 100% { box-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 0 30px rgba(34,211,238,0.2), inset 0 1px 0 rgba(34,211,238,0.2); }
+      50% { box-shadow: 0 8px 40px rgba(0,0,0,0.5), 0 0 50px rgba(34,211,238,0.45), inset 0 1px 0 rgba(34,211,238,0.35); }
+    }
+    @keyframes glow-purple {
+      0%, 100% { box-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 0 30px rgba(167,139,250,0.22), inset 0 1px 0 rgba(167,139,250,0.2); }
+      50% { box-shadow: 0 8px 40px rgba(0,0,0,0.5), 0 0 50px rgba(167,139,250,0.5), inset 0 1px 0 rgba(167,139,250,0.35); }
+    }
+    @keyframes glow-orange {
+      0%, 100% { box-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 0 30px rgba(251,146,60,0.2), inset 0 1px 0 rgba(251,146,60,0.2); }
+      50% { box-shadow: 0 8px 40px rgba(0,0,0,0.5), 0 0 50px rgba(251,146,60,0.45), inset 0 1px 0 rgba(251,146,60,0.35); }
+    }
+    @keyframes glow-green {
+      0%, 100% { box-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 0 30px rgba(74,222,128,0.2), inset 0 1px 0 rgba(74,222,128,0.2); }
+      50% { box-shadow: 0 8px 40px rgba(0,0,0,0.5), 0 0 50px rgba(74,222,128,0.45), inset 0 1px 0 rgba(74,222,128,0.35); }
+    }
+    /* 4th card — green "Currently Learning" */
+    .hrp-card:nth-child(4) {
+      background: linear-gradient(135deg, rgba(5,60,30,0.75) 0%, rgba(3,40,20,0.7) 100%) !important;
+      border: 1.5px solid rgba(74,222,128,0.7) !important;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 0 30px rgba(74,222,128,0.2), inset 0 1px 0 rgba(74,222,128,0.2) !important;
+      animation: badge-float 4s ease-in-out infinite 2.4s, glow-green 3s ease-in-out infinite 2.8s !important;
+    }
+    .hrp-card:nth-child(4) .hrp-card-label {
+      color: #4ade80 !important; font-size: 0.6rem; letter-spacing: 0.2em;
+      text-shadow: 0 0 10px rgba(74,222,128,0.5) !important;
+    }
+    .hrp-progress-bar { height: 5px; border-radius: 100px; margin-top: 6px; overflow: hidden; background: rgba(255,255,255,0.07); }
+    .hrp-progress-fill { height: 100%; border-radius: 100px; }
+    .hrp-skill-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+    .hrp-skill-name { font-family: 'Space Mono', monospace; font-size: 0.6rem; color: #a0b4d6; min-width: 80px; }
+
+    /* Code Snippet — vivid syntax highlighting */
+    .hrp-code { color: #e2e8f0 !important; font-size: 0.7rem !important; line-height: 1.8 !important; }
+    .hrp-code .kw { color: #f472b6 !important; font-weight: 700 !important; }
+    .hrp-code .fn { color: #67e8f9 !important; font-weight: 600 !important; }
+    .hrp-code .st { color: #86efac !important; }
+    .hrp-code .cm { color: #6b7fa3 !important; font-style: italic !important; }
+    .hrp-code .num { color: #fdba74 !important; }
+
+    /* ── EDUCATION CARD — gradient left border ── */
+    .edu-card {
+      border-left: 3px solid !important;
+      border-image: linear-gradient(180deg, #22d3ee, #a78bfa, #f472b6) 1 !important;
+    }
+    .edu-card:hover {
+      box-shadow: 0 15px 50px rgba(34,211,238,0.12) !important;
+    }
+
+    /* ── CERTIFICATION ROWS — colorful bar on hover ── */
+    .cert-row-bar::before {
+      background: linear-gradient(180deg, #22d3ee, #a78bfa) !important;
+      width: 4px !important;
+    }
+    .cert-icon {
+      background: rgba(251,146,60,0.12) !important;
+      border-color: rgba(251,146,60,0.3) !important;
+    }
+    .cert-row:hover {
+      border-color: rgba(34,211,238,0.35) !important;
+      box-shadow: 0 4px 28px rgba(34,211,238,0.1) !important;
+    }
+
+    /* ── FOOTER — gradient top border ── */
+    footer {
+      border-top: 1px solid transparent !important;
+      background: linear-gradient(var(--p-bg), var(--p-bg)) padding-box,
+        linear-gradient(90deg, transparent, rgba(34,211,238,0.3), rgba(167,139,250,0.3), rgba(244,114,182,0.2), transparent) border-box !important;
+    }
+    footer::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, transparent 0%, rgba(79,50,180,0.04) 100%);
+      pointer-events: none;
+    }
+
+    /* ── STAT BOX numbers — gradient ── */
+    .stat-n {
+      background: linear-gradient(135deg, #22d3ee, #a78bfa);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* ── TAG pills on project cards — colorful ── */
+    .tag {
+      background: rgba(167,139,250,0.08) !important;
+      border-color: rgba(167,139,250,0.25) !important;
+      color: #c4b5fd !important;
+    }
+
+    /* ── CHIP hover ── */
+    .chip:hover {
+      border-color: #22d3ee !important;
+      color: #22d3ee !important;
+      background: rgba(34,211,238,0.06) !important;
+    }
+
+    /* ── DIVIDER — gradient colors ── */
+    .divider {
+      background: linear-gradient(90deg, transparent, rgba(34,211,238,0.2), rgba(167,139,250,0.2), transparent) !important;
+    }
+
+    /* ── SECTION HEAD LINE ── */
+    .section-head-line {
+      background: linear-gradient(90deg, rgba(34,211,238,0.3), rgba(167,139,250,0.2), transparent) !important;
+    }
+    .cert-head-line {
+      background: linear-gradient(90deg, rgba(167,139,250,0.3), transparent) !important;
+    }
+
+    /* ── BACK TO TOP button ── */
+    #back-top {
+      background: linear-gradient(135deg, rgba(34,211,238,0.15), rgba(167,139,250,0.15)) !important;
+      border-color: rgba(34,211,238,0.3) !important;
+      color: #22d3ee !important;
+    }
+    #back-top:hover {
+      background: linear-gradient(135deg, #22d3ee, #a78bfa) !important;
+      color: #03070f !important;
+    }
+
   </style>
 </head>
 <body>
@@ -682,29 +1045,20 @@
   </div>
 
   <!-- Profile image -->
-  <div class="hero-image-wrap">
-    <div class="orbit-ring orbit-spin" style="width:420px;height:420px;border:1px dashed rgba(79,142,255,0.18);"></div>
-    <div class="orbit-ring orbit-spin-rev" style="width:500px;height:500px;border:1px dotted rgba(34,211,163,0.1);"></div>
-    <!-- Orbit dots -->
-    <div class="orbit-dot" style="--sz:8px;width:8px;height:8px;background:var(--p-accent);box-shadow:0 0 12px var(--p-accent);--r:-140px;--dur:20s;"></div>
-    <div class="orbit-dot orbit-dot-rev" style="--sz:6px;width:6px;height:6px;background:var(--p-green);box-shadow:0 0 10px var(--p-green);--r:-165px;--dur:30s;"></div>
-    <div class="orbit-dot" style="--sz:5px;width:5px;height:5px;background:var(--p-orange);box-shadow:0 0 9px var(--p-orange);--r:-115px;--dur:25s;"></div>
-
-    <div style="position:relative;z-index:2;" id="img-tilt-wrap">
-      <div class="profile-circle">
-        <img src="https://i.ibb.co/S7Vdt0p8/photo.jpg" alt="Piyush Gupta"
-          onerror="this.parentElement.innerHTML='<div style=\'width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:5rem;background:linear-gradient(135deg,#0c1220,#101828);\'>👤</div>'" />
-      </div>
-      <!-- Badge -->
-      <div class="hero-badge badge-float" style="top:10px;right:-40px;">
-        <div class="blink pulse-glow" style="width:7px;height:7px;border-radius:50%;background:var(--p-green);flex-shrink:0;"></div>
-        <span style="font-family:'Space Mono',monospace;font-size:0.68rem;color:var(--p-green);white-space:nowrap;">Available for Hire</span>
-      </div>
-      <!-- Stat -->
-      <div class="hero-stat badge-float-delay" style="bottom:10px;left:-50px;">
-        <div id="count-up" style="font-size:1.9rem;font-weight:800;color:var(--p-accent);line-height:1;font-family:'Space Mono',monospace;">0+</div>
-        <div style="font-family:'Space Mono',monospace;font-size:0.6rem;color:var(--p-muted);text-transform:uppercase;letter-spacing:0.12em;margin-top:2px;">Projects Done</div>
-      </div>
+  <div class="hero-image-wrap" id="img-tilt-wrap">
+    <!-- Glow behind sticker -->
+    <div style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:360px;height:360px;background:radial-gradient(ellipse at center,rgba(79,142,255,0.2) 0%,transparent 70%);z-index:1;pointer-events:none;"></div>
+    <!-- Sticker image -->
+    <img class="profile-sticker" src="/assets/generated/piyush-sticker-transparent.dim_600x700.png" alt="Piyush Gupta" />
+    <!-- Badge -->
+    <div class="hero-badge badge-float" style="top:100px;right:-10px;z-index:5;">
+      <div class="blink pulse-glow" style="width:7px;height:7px;border-radius:50%;background:var(--p-green);flex-shrink:0;"></div>
+      <span style="font-family:'Space Mono',monospace;font-size:0.68rem;color:var(--p-green);white-space:nowrap;">Available for Hire</span>
+    </div>
+    <!-- Stat -->
+    <div class="hero-stat badge-float-delay" style="bottom:50px;right:-10px;z-index:5;">
+      <div id="count-up" style="font-size:1.9rem;font-weight:800;color:var(--p-accent);line-height:1;font-family:'Space Mono',monospace;">0+</div>
+      <div style="font-family:'Space Mono',monospace;font-size:0.6rem;color:var(--p-muted);text-transform:uppercase;letter-spacing:0.12em;margin-top:2px;">Projects Done</div>
     </div>
   </div>
 
@@ -752,6 +1106,85 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.4 3.14 2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
         +91-8384005582
       </a>
+    </div>
+  </div>
+
+  <!-- Hero Right Panel -->
+  <div class="hero-right-panel fu fu-2">
+    <!-- Tech Stack Card -->
+    <div class="hrp-card">
+      <div class="hrp-card-label">⚡ // Tech Stack</div>
+      <div class="hrp-tags">
+        <span class="hrp-tag t-blue">Python</span>
+        <span class="hrp-tag t-teal">Pandas</span>
+        <span class="hrp-tag t-purple">Scikit-learn</span>
+        <span class="hrp-tag t-pink">TensorFlow</span>
+        <span class="hrp-tag t-cyan">NumPy</span>
+        <span class="hrp-tag t-orange">Matplotlib</span>
+        <span class="hrp-tag t-teal">Jupyter</span>
+        <span class="hrp-tag t-purple">Seaborn</span>
+        <span class="hrp-tag t-green">SQL</span>
+        <span class="hrp-tag t-blue">Java</span>
+        <span class="hrp-tag t-cyan">C++</span>
+        <span class="hrp-tag t-pink">HTML/CSS</span>
+      </div>
+    </div>
+    <!-- Stats Card -->
+    <div class="hrp-card">
+      <div class="hrp-card-label">📊 // At a Glance</div>
+      <div class="hrp-stat-row">
+        <div class="hrp-stat-item">
+          <div class="hrp-stat-num">7+</div>
+          <div class="hrp-stat-lbl">Projects</div>
+        </div>
+        <div class="hrp-stat-item">
+          <div class="hrp-stat-num">3</div>
+          <div class="hrp-stat-lbl">Certs</div>
+        </div>
+        <div class="hrp-stat-item">
+          <div class="hrp-stat-num">2+</div>
+          <div class="hrp-stat-lbl">Yrs Exp</div>
+        </div>
+      </div>
+    </div>
+    <!-- Code Snippet Card -->
+    <div class="hrp-card">
+      <div class="hrp-card-label">🔧 // Currently Building</div>
+      <div class="hrp-code">
+        <span class="cm"># ML pipeline snippet</span><br>
+        <span class="kw">import</span> pandas <span class="kw">as</span> pd<br>
+        <span class="kw">from</span> sklearn <span class="kw">import</span> ensemble<br>
+        <br>
+        <span class="fn">model</span> = ensemble.RandomForest()<br>
+        <span class="fn">model</span>.fit(X_train, y_train)<br>
+        <span class="cm"># accuracy: <span class="num">94.2%</span> ✓</span>
+      </div>
+    </div>
+    <!-- Currently Learning Card -->
+    <div class="hrp-card">
+      <div class="hrp-card-label">🌱 // Currently Learning</div>
+      <div>
+        <div class="hrp-skill-row">
+          <span class="hrp-skill-name">Deep Learning</span>
+          <div class="hrp-progress-bar" style="flex:1"><div class="hrp-progress-fill" style="width:75%;background:linear-gradient(90deg,#4ade80,#22d3ee)"></div></div>
+          <span style="font-family:'Space Mono',monospace;font-size:0.55rem;color:#4ade80">75%</span>
+        </div>
+        <div class="hrp-skill-row">
+          <span class="hrp-skill-name">PyTorch</span>
+          <div class="hrp-progress-bar" style="flex:1"><div class="hrp-progress-fill" style="width:60%;background:linear-gradient(90deg,#22d3ee,#a78bfa)"></div></div>
+          <span style="font-family:'Space Mono',monospace;font-size:0.55rem;color:#67e8f9">60%</span>
+        </div>
+        <div class="hrp-skill-row">
+          <span class="hrp-skill-name">NLP</span>
+          <div class="hrp-progress-bar" style="flex:1"><div class="hrp-progress-fill" style="width:50%;background:linear-gradient(90deg,#a78bfa,#f472b6)"></div></div>
+          <span style="font-family:'Space Mono',monospace;font-size:0.55rem;color:#c4b5fd">50%</span>
+        </div>
+        <div class="hrp-skill-row">
+          <span class="hrp-skill-name">Cloud ML</span>
+          <div class="hrp-progress-bar" style="flex:1"><div class="hrp-progress-fill" style="width:40%;background:linear-gradient(90deg,#fb923c,#f472b6)"></div></div>
+          <span style="font-family:'Space Mono',monospace;font-size:0.55rem;color:#fdba74">40%</span>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -910,21 +1343,21 @@
 <script>
 // ── DATA ──────────────────────────────────────────────────────────────────
 const SKILLS = [
-  {label:'Python',icon:'https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg'},
-  {label:'Java',icon:'https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg'},
-  {label:'SQL',icon:'https://raw.githubusercontent.com/devicons/devicon/master/icons/mysql/mysql-original-wordmark.svg'},
-  {label:'Pandas',icon:'https://raw.githubusercontent.com/devicons/devicon/master/icons/pandas/pandas-original.svg'},
-  {label:'NumPy',icon:'https://raw.githubusercontent.com/devicons/devicon/master/icons/numpy/numpy-original.svg'},
-  {label:'Matplotlib',icon:'https://upload.wikimedia.org/wikipedia/commons/8/84/Matplotlib_icon.svg'},
-  {label:'Seaborn',icon:'https://seaborn.pydata.org/_images/logo-mark-lightbg.svg'},
-  {label:'HTML',icon:'https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original-wordmark.svg'},
-  {label:'CSS',icon:'https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original-wordmark.svg'},
-  {label:'JavaScript',icon:'https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg'},
-  {label:'Git',icon:'https://www.vectorlogo.zone/logos/git-scm/git-scm-icon.svg'},
-  {label:'Jupyter',icon:'https://raw.githubusercontent.com/devicons/devicon/master/icons/jupyter/jupyter-original-wordmark.svg'},
-  {label:'VS Code',icon:'https://raw.githubusercontent.com/devicons/devicon/master/icons/vscode/vscode-original.svg'},
-  {label:'Excel',icon:'https://upload.wikimedia.org/wikipedia/commons/3/34/Microsoft_Office_Excel_%282019%E2%80%93present%29.svg'},
-  {label:'Tableau',icon:'https://www.vectorlogo.zone/logos/tableau/tableau-icon.svg'},
+  {label:'Python',cat:'lang',icon:'https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg'},
+  {label:'Java',cat:'lang',icon:'https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg'},
+  {label:'SQL',cat:'lang',icon:'https://raw.githubusercontent.com/devicons/devicon/master/icons/mysql/mysql-original-wordmark.svg'},
+  {label:'Pandas',cat:'ml',icon:'https://raw.githubusercontent.com/devicons/devicon/master/icons/pandas/pandas-original.svg'},
+  {label:'NumPy',cat:'ml',icon:'https://raw.githubusercontent.com/devicons/devicon/master/icons/numpy/numpy-original.svg'},
+  {label:'Matplotlib',cat:'data',icon:'https://upload.wikimedia.org/wikipedia/commons/8/84/Matplotlib_icon.svg'},
+  {label:'Seaborn',cat:'data',icon:'https://seaborn.pydata.org/_images/logo-mark-lightbg.svg'},
+  {label:'HTML',cat:'lang',icon:'https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original-wordmark.svg'},
+  {label:'CSS',cat:'lang',icon:'https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original-wordmark.svg'},
+  {label:'JavaScript',cat:'lang',icon:'https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg'},
+  {label:'Git',cat:'tool',icon:'https://www.vectorlogo.zone/logos/git-scm/git-scm-icon.svg'},
+  {label:'Jupyter',cat:'tool',icon:'https://raw.githubusercontent.com/devicons/devicon/master/icons/jupyter/jupyter-original-wordmark.svg'},
+  {label:'VS Code',cat:'tool',icon:'https://raw.githubusercontent.com/devicons/devicon/master/icons/vscode/vscode-original.svg'},
+  {label:'Excel',cat:'tool',icon:'https://upload.wikimedia.org/wikipedia/commons/3/34/Microsoft_Office_Excel_%282019%E2%80%93present%29.svg'},
+  {label:'Tableau',cat:'data',icon:'https://www.vectorlogo.zone/logos/tableau/tableau-icon.svg'},
 ];
 
 const PROJECTS = [
@@ -949,6 +1382,7 @@ const sg = document.getElementById('skills-grid');
 SKILLS.forEach(s => {
   const d = document.createElement('div');
   d.className = 'skill-pill reveal';
+  d.setAttribute('data-cat', s.cat || 'tool');
   d.innerHTML = `<img src="${s.icon}" alt="${s.label}" /><span>${s.label}</span>`;
   sg.appendChild(d);
 });
@@ -1054,7 +1488,7 @@ function scrollTo(id) {
 // ── 3D TILT ───────────────────────────────────────────────────────────────
 (function(){
   const wrap = document.getElementById('img-tilt-wrap');
-  const circle = wrap.querySelector('.profile-circle');
+  const circle = wrap.querySelector('.profile-sticker') || wrap.querySelector('.profile-circle');
   wrap.addEventListener('mousemove',e=>{
     const r=wrap.getBoundingClientRect();
     const dx=(e.clientX-(r.left+r.width/2))/(r.width/2);
@@ -1099,7 +1533,9 @@ function scrollTo(id) {
         const dx=particles[i].x-particles[j].x, dy=particles[i].y-particles[j].y;
         const dist=Math.sqrt(dx*dx+dy*dy);
         if(dist<100){
-          ctx.strokeStyle=`rgba(79,142,255,${0.06*(1-dist/100)})`;
+          const lineColors = ['79,142,255','34,211,163','167,139,250'];
+          const ci2 = (i + j) % lineColors.length;
+          ctx.strokeStyle=`rgba(${lineColors[ci2]},${0.07*(1-dist/100)})`;
           ctx.lineWidth=0.5; ctx.beginPath();
           ctx.moveTo(particles[i].x,particles[i].y);
           ctx.lineTo(particles[j].x,particles[j].y); ctx.stroke();
